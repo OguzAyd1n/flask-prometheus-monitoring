@@ -1,15 +1,34 @@
 # Flask Prometheus Monitoring Örneği
 
-Bu proje, Flask web uygulamalarında Prometheus metrik toplama sisteminin nasıl entegre edileceğini gösteren bir örnek uygulamadır.
+Bu proje, Flask web uygulamalarında Prometheus metrik toplama sisteminin nasıl entegre edileceğini gösteren gelişmiş bir örnek uygulamadır.
 
 ## Özellikler
 
 - Flask web uygulaması
 - Prometheus metrik toplama
-- Performans izleme
-- HTTP istek sayısı ve yanıt süresi metrikleri
+- Detaylı performans izleme
+- Sistem metrikleri (CPU, Bellek, Disk)
+- HTTP istek/yanıt metrikleri
+- Hata izleme ve loglama
+- Sağlık kontrolü
+- Docker desteği
+- Otomatik yeniden başlatma
+- Detaylı API endpoint'leri
+
+## Toplanan Metrikler
+
+- HTTP istek sayısı (method ve endpoint bazında)
+- HTTP istek gecikmesi
+- HTTP istek/yanıt boyutları
+- CPU kullanımı
+- Bellek kullanımı
+- Disk kullanımı
+- Aktif kullanıcı sayısı
+- Hata sayıları ve türleri
 
 ## Kurulum
+
+### Yerel Kurulum
 
 1. Sanal ortam oluşturun ve aktifleştirin:
 ```bash
@@ -28,10 +47,24 @@ pip install -r requirements.txt
 python app.py
 ```
 
-## Kullanım
+### Docker ile Kurulum
 
-- Ana sayfa: http://localhost:5000
-- Metrikler sayfası: http://localhost:5000/metrics
+1. Docker imajını oluşturun:
+```bash
+docker build -t flask-prometheus-app .
+```
+
+2. Docker Compose ile çalıştırın:
+```bash
+docker-compose up
+```
+
+## API Endpoint'leri
+
+- `/`: Ana sayfa
+- `/metrics`: Prometheus metrikleri
+- `/health`: Sağlık kontrolü
+- `/api/status`: Detaylı sistem durumu
 
 ## Prometheus Entegrasyonu
 
@@ -45,6 +78,20 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:5000']
 ```
+
+## Loglama
+
+Uygulama logları `app.log` dosyasında tutulur ve otomatik olarak döndürülür:
+- Maksimum log dosyası boyutu: 100KB
+- Yedek log dosyası sayısı: 3
+
+## Docker Compose Özellikleri
+
+- Otomatik yeniden başlatma
+- Sağlık kontrolü
+- Geliştirme modu
+- Volume bağlantısı
+- Port yönlendirme
 
 ## Lisans
 
